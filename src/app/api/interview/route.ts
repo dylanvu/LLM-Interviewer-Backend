@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic' // defaults to auto
+
+const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
 /**
  * Makes a request to Google Gemini for personalized recommendations
  * @param request
@@ -20,7 +28,10 @@ export async function POST(
                 error:
                     "Missing API Key in server. Please contact the site administrator.",
             },
-            { status: 500 },
+            {
+                status: 500,
+                headers: headers
+            },
         );
     }
 
@@ -34,7 +45,10 @@ export async function POST(
             {
                 error: "Missing body",
             },
-            { status: 400 },
+            {
+                status: 400,
+                headers: headers
+            },
         );
     }
 
@@ -95,7 +109,10 @@ export async function POST(
         geminiText += "}";
         const nextRes = NextResponse.json(
             geminiText,
-            { status: 201 },
+            {
+                status: 201,
+                headers: headers
+            },
         );
         return nextRes;
     } catch (e) {
@@ -103,7 +120,10 @@ export async function POST(
         console.error(e);
         return NextResponse.json(
             "An error has occurred",
-            { status: 201 },
+            {
+                status: 500,
+                headers: headers
+            },
         );
     }
 }
