@@ -19,7 +19,7 @@ export async function POST(
 ): Promise<any> {
     const reqJSON = await request.json();
 
-    console.log(reqJSON);
+    // console.log(reqJSON);
 
     // generate an API key: https://makersuite.google.com/app/prompts/new_chat
     if (!process.env.GEMINI_API_KEY) {
